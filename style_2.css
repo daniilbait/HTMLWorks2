@@ -84,6 +84,10 @@ table
         font-size: 24px;
         font-weight: bold;
     }
+    tr:nth-child(5), tr:nth-child(6), tr:nth-child(7)
+    {
+        height:50px;
+    }
     tr:nth-child(2)
     {
         text-align: center;
@@ -162,4 +166,5 @@ footer
         margin: 10px;
     }
 }
+
 
