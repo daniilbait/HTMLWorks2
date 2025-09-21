@@ -3,6 +3,10 @@ body
     width: 960px;
     margin: auto;
 }
+div.main
+{
+    background-color: #7bffab;    
+}
 header
 {
     background-color: #F7D7B1;
@@ -61,15 +65,8 @@ h1
     bottom:5px;
     right:20px;
 }
-div.hyperpages
-{
-    background-color: rgba(239, 58, 255, 0.687);
-    ul li
-    {
-        list-style-type:square;
-    };
-}
-
+h2{margin: 20px 0px 10px 20px;}
+ul li { list-style: square; }
 
 table
 {
@@ -77,8 +74,6 @@ table
     border-spacing: 0px;
     margin: auto;
     text-align: center;
-    /* -webkit-text-stroke-color: white;
-    -webkit-text-stroke-width:0.2pt; */
     tr
     {
         height: 25px;
@@ -120,6 +115,50 @@ table
 }
 form
 {
+    position: relative;
     background-color: rgba(255, 255, 255, 0.8);
-
+    width: 340px;
+    margin: 10px 0px 10px 50px;
+    border: 2px solid black;
+    h2
+    {
+        text-align: center;
+        margin: 0px;
+        padding-top: 10px;
+        left:100px;
+        top: 10px;
+    }
+    .square1
+    {
+        display: flex;
+        justify-content: space-between; /* Распределяет пространство между элементами */
+        align-items: center; /* Выравнивание по вертикали */
+        width: 95%;
+        margin: 10px 5px;
+    }
+    .other
+    {
+        margin-left: 5px;
+    }
+    .descriprion
+    {
+        margin-left: 5px;
+    }
+    #submit
+    {
+        display: block;
+        margin: 10px auto;
+        
+    }
+}
+footer
+{
+    height: 30px;
+    width: 900px;
+    margin: auto;
+    background-color: rgba(252, 255, 47, 0.889);
+    p
+    {
+        margin: 10px;
+    }
 }
