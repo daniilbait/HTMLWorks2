@@ -22,13 +22,13 @@ nav
     top: 1px;
     right: 1px;
 }
-nav ul 
+nav div 
 {
     list-style: none;
     margin: 0pt;
     padding: 0pt;
 }
-nav ul a
+nav div a
 {
     display: inline-block;
     padding: 10px 20px;
@@ -162,3 +162,4 @@ footer
         margin: 10px;
     }
 }
+
