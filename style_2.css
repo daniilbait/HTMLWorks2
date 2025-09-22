@@ -30,6 +30,7 @@ nav div
 }
 nav div a
 {
+    /* Вид */
     display: inline-block;
     padding: 10px 20px;
     background-color: #aaaaaad8;
@@ -37,7 +38,7 @@ nav div a
     width: 100px;
     margin: 3px;
     border-radius: 10px 0px 10px 0px;
-
+    /* Сам текст */
     text-decoration: none;
     text-align: center;
     color:#000;
@@ -65,9 +66,14 @@ h1
     bottom:5px;
     right:20px;
 }
-h2{margin: 20px 0px 10px 20px;}
-ul li { list-style: square; }
-
+h2
+{
+    margin: 20px 0px 10px 20px;
+}
+ul li
+{
+    list-style: square;
+}
 table
 {
     border: 3px solid black;
@@ -83,10 +89,6 @@ table
         background-color: rgb(85, 181, 255);
         font-size: 24px;
         font-weight: bold;
-    }
-    tr:nth-child(5), tr:nth-child(6), tr:nth-child(7)
-    {
-        height:50px;
     }
     tr:nth-child(2)
     {
@@ -135,24 +137,20 @@ form
     .square1
     {
         display: flex;
-        justify-content: space-between; /* Распределяет пространство между элементами */
-        align-items: center; /* Выравнивание по вертикали */
+        justify-content: space-between;
+        align-items: center;
         width: 95%;
         margin: 10px 5px;
     }
-    .other
+    .descriprion, .other
     {
         margin-left: 5px;
-    }
-    .descriprion
-    {
-        margin-left: 5px;
+        margin-top:5px;
     }
     #submit
     {
         display: block;
         margin: 10px auto;
-        
     }
 }
 footer
@@ -162,9 +160,8 @@ footer
     background-color: rgba(252, 255, 47, 0.889);
     p
     {
-        margin: 10px;
+        height: 30px;
+        margin: 5px;
+        padding: 5px 0px;
     }
 }
-
-
-
