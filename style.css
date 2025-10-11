@@ -1,0 +1,72 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    font-family: 'Times New Roman', Times, serif;
+}
+body
+{
+    font-size: 0.825rem;
+}
+h1
+{
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+}
+#form
+{
+    background-color: rgb(172, 254, 89);
+    border: 3px solid black;
+}
+.counter, #selection, button
+{
+    border: 2px solid black;
+}
+span
+{
+    background-color: rgba(150, 147, 147, 0.726);
+}
+@media (min-width:380px) {
+    body
+    {
+        font-size: 1rem;
+    }
+    h1
+    {
+        font-size: 1.5rem;
+    }
+}
+@media (min-width:400px){
+    #form
+    {
+        width: 360px;
+    }
+}
+@media (min-width:668px) {
+    body
+    {
+        font-size: 1.125rem;
+    }
+    h1
+    {
+        font-size: 1.725rem;
+    }
+    #form
+    {
+        width: 400px;
+    }
+}
+@media screen and (min-width: 861px) {
+    body
+    {
+        font-size: 1.25rem;
+    }
+    h1
+    {
+        font-size: 2rem;
+    }
+}
