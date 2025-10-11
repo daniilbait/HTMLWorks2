@@ -1,133 +1,185 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head><link rel="stylesheet" href="style_2.css"> <title>Лаборатная работа 2</title> </head>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Лабораторная работа 5</title>
+    <script defer>
+      function Calc(serviceSelected, serviseCost)
+      {
+        const spanOutput = document.getElementById(`output`);//Находим поле вывода
+
+        const preQuantity = document.querySelector(`.counter`); //Находим счетчик услуг
+        const quantity = parseInt(preQuantity.value);           //Считываем значение со счетчика
+
+        const displaySelect = document.getElementById(`selectBlock`);
+        const displayCheckbox = document.getElementById(`multiCheckbox`);
+
+        if(serviceSelected==1)//первая услуга
+        {
+          displaySelect.classList.add('d-none');
+          displayCheckbox.classList.add('d-none');
+
+          const select = document.getElementById('selection');
+          select.selectedIndex = 0;
+          const checkboxes = document.querySelectorAll('input[name="checkboxGoods"]');
+          checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+          });
+          
+          
+          if(isNaN(quantity) || quantity < 1)
+          {
+            spanOutput.innerHTML = `Введите корректное количество (положительное целое число)!`;
+            return;
+          }
+
+          const totalPrice = quantity*serviseCost;
+          spanOutput.innerHTML=`Стоимость услуги равна: ${totalPrice}руб.`;
+        }
+        else if(serviceSelected==2)//вторая услуга
+        {
+          displaySelect.classList.remove('d-none');
+          displayCheckbox.classList.add('d-none');
+          
+          const checkboxes = document.querySelectorAll('input[name="checkboxGoods"]');
+          checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+          });
+
+          if(isNaN(quantity) || quantity < 1)
+          {
+            spanOutput.innerHTML = `Введите корректное количество (положительное целое число)!`;
+            return;
+          }
+
+          const product = document.getElementById(`selection`);   //Находим список опций
+          const prePrice = product.options[product.selectedIndex];//Считываем выбранную опцию
+          const productPrice = parseInt(prePrice.value);          //Считываем значение с выбранной опции
+          
+          if (isNaN(productPrice)) //Проверяем, что опция выбрана
+          {
+            spanOutput.innerHTML = `Выберите опцию!`;
+            return;
+          }
+
+          const totalPrice = quantity*(serviseCost+productPrice);
+          spanOutput.innerHTML=`Стоимость услуги равна: ${totalPrice}руб.`;
+        }
+        else if(serviceSelected==3)//третья услуга
+        {
+          displaySelect.classList.add('d-none');
+          displayCheckbox.classList.remove('d-none');
+          
+          const select = document.getElementById('selection');
+          select.selectedIndex = 0;
+
+          if(isNaN(quantity) || quantity < 1)
+          {
+            spanOutput.innerHTML = `Введите корректное количество (положительное целое число)!`;
+            return;
+          }
+
+          const selectedCheckboxes = document.querySelectorAll('input[name="checkboxGoods"]:checked');
+          let totalPrice=0;
+          selectedCheckboxes.forEach(checkBox => {
+            const value = parseInt(checkBox.value);
+            if (!isNaN(value)) {
+                totalPrice += value;
+            }
+          });
+          totalPrice=quantity*(totalPrice+serviseCost);
+          spanOutput.innerHTML=`Стоимость заказа равна: ${totalPrice}руб.`;
+        }
+      }
+      document.addEventListener('DOMContentLoaded', function() 
+      {
+        const form = document.getElementById('form');
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(input => 
+        {
+          input.addEventListener('input', RadioChange);
+          input.addEventListener('change', RadioChange);
+        });
+
+        form.addEventListener('click', RadioChange);
+        const counterInput = document.querySelector('.counter');
+        counterInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    });
+      });
+      function RadioChange()
+      {
+        const radioChosed = document.querySelector(`input[name="service"]:checked`);
+        if(radioChosed)
+        {
+          const radioValue=parseInt(radioChosed.value);
+          const radioCost=parseInt(radioChosed.dataset.price);
+          Calc(radioValue, radioCost);
+          
+        }
+        else
+        {
+          const spanOutput = document.getElementById(`output`);
+          spanOutput.innerHTML = `Услуга еще не выбрана!`;
+          return;
+        }
+      }
+    </script>
+  </head>
   <body>
-    <div class="main">
-    <!-- Шапка -->
-    <header>
-      <img alt="логотип" class="logo" src="logo.jpg">
-      <nav>
-        <div class="heade_div">
-          <a href="#hyperpages">Гиперссылки</a>
-          <a href="#table">Таблица</a>
-          <a href="#form">Форма</a>
+    <form id="form" class="mx-auto mt-2 d-flex flex-column align-self-center p-1"> <!-- Форма -->
+      <h1 class="mb-2">Калькулятор стоимости заказа фотоуслуги</h1>
+      <div class="d-flex flex-column justify-content-between mb-1"><!--Счетчик (ввод числа)-->
+        <label id="fullname">Количество:</label>
+        <input class="counter" type="number" min="1" required="required">
+      </div><!--Счетчик (ввод числа)-->
+      <div class="d-flex flex-column"><!--Радиокнопки (услуга)-->
+        <label>Выберите услугу:</label>
+        <div class="ms-3">
+          <input type="radio" name="service" value="1" data-price="250">
+          <label>Печать фотографий (250р)</label>
         </div>
-      </nav>
-      <h1>Разработка пользовательского WEB-интерфейса</h1>
-    </header>
-    <!-- Шапка -->
-    <!-- Гиперссылки -->
-      <h2 id="hyperpages">Гиперссылки:</h2>
-      <ul>
-        <!--1) абсолютную гиперссылку на главную страницу сайта kubsu.ru;-->
-        <li><a href="http://kubsu.ru/">1. Главная страница сайта КубГУ</a></li>
-        <!--2) абсолютную на главную сайта kubsu.ru в протоколе https;-->
-        <li><a href="https://kubsu.ru/">2. Главная страница сайта КубГУ (в протоколе https)</a></li>
-        <!--3) ссылку-изображение;-->
-        <li><a href="https://github.com">3.<img alt="Изображение-ссылка" src="image1.jpg" width="300" height="180"></a></li>
-        <!-- 4) сокращенную ссылку на внутреннюю страницу; -->
-        <li><a href="/HTMLWorks2/Fourth.html">4. На внутреннюю страницу</a></li>
-        <!-- 5) сокращенную ссылку на главную страницу; -->
-        <li><a href="/HTMLWorks2">5. На главную страницу</a></li>
-        <!-- 6) ссылку на фрагмент текущей страницы; -->
-        <li><a href="#start">6. Перейти к заголовку данн  ой страницы</a></li>
-        <!-- 7) ссылку с тремя параметрами в URL; -->
-        <li><a href="https://www.wildberries.ru/catalog/dom/osveshchenie/nochniki?sort=popular&page=1&fcolor=16119260">7. Поиск с тремя параметрами</a></li>
-        <!-- 8) ссылку с параметром id в URL; -->
-        <!-- 9) относительную на страницу в текущем каталоге; -->
-        <li><a href="Ninth.html">9. Страница в текущем каталоге</a></li>
-        <!-- 10) относительную на страницу в каталоге about; -->
-        <li><a href="/about/Tenth.html">10. Страница в каталоге about</a></li>
-        <!-- 11) относительную на страницу в каталоге уровнем выше текущего; -->
-        <!-- 12) относительную на страницу в каталоге двумя уровнями выше; -->
-        <!-- 13) контекстную в тексте абзаца; -->
-        <li><span> 13. В последнее время студенты часто стали жаловаться на отсутствие мобильного интернета по вечерам. Взамен нестабильному мобильному сигналу проживающие в общежитии, а также посетители основного здания ВУЗа могут по следующей <a href="https://www.kubsu.ru/sites/default/files/insert/page/instrukciya_po_podklyucheniyu_k_seti_wifi_v_windows10.pdf">инструкции</a> подключиться к точки доступа wi-fi на ПК или ноутбуках.</span></li>
-        <!-- 14) ссылку на фрагмент страницы стороннего сайта; -->
-        <li><a href="https://ru.wikipedia.org/wiki/Linux#Критическая_кампания">14. Ссылка на фрагмент страницы стороннего сайта</a></li>
-        <!-- 15) ссылки из прямоугольных и круглых областей картинки (HTML-тег map); -->
-        <!-- 16) ссылку с пустым href; -->
-        <li><a href="">16. Тут пусто</a></li>
-        <!-- 17) ссылку без href; -->
-        <li><a>17. А тут вообще ничего нет</a></li>
-        <!-- 18) ссылку, по которой запрещен переход поисковикам; -->
-        <li><a href="index.html" rel="nofollow">18. Фармить криптовалюту можно здесь</a></li>
-        <!-- 19) запрещенную для индексации поисковиками; -->
-        <li><a href="index.html" rel="noindex">19. Оформить загранпаспорт</a></li>
-        <!-- 20) нумерованный список ссылок с подписями title; -->
-        <!-- 21) ссылку на файл на сервере FTP с авторизацией; -->
-      </ul>
-    <!-- Гиперссылки -->
-    <!-- Таблица -->
-     <table id="table"> 
-      <tr> 
-        <td colspan="4">Расписание занятий на понедельник</td>
-      </tr>
-      <tr class="chet"> 
-        <td>Пара</td>
-        <td>Время</td>
-        <td>МО22/1</td>
-        <td>МО22/2</td>
-      </tr>
-      <tr class="nechet"> 
-        <td rowspan="2">4</td>
-        <td rowspan="2">12:40-14:00</td>
-        <td>ООП лаб</td>
-        <td rowspan="2">Разработка пользовательского WEB интерфейса лаб</td>
-      </tr>
-      <tr class="nechet">
-        <td></td> 
-      </tr>
-      <tr class="chet"> 
-        <td>5</td>
-        <td>14:10-15:30</td>
-        <td colspan="2">Теория вероятностей и математическая статистика лекция</td>
-      </tr>
-      <tr class="nechet"> 
-        <td>6</td>
-        <td>15:40-17:00</td>
-        <td colspan="2">Разработка пользовательского WEB интерфейса лекция</td>
-      </tr>
-      <tr class="chet">
-        <td>7</td>
-        <td>17:10-18:30</td>
-        <td>Математический анализ лаб</td>
-        <td></td>
-      </tr>
-    </table>
-    <!-- Таблица -->
-     <!-- Форма -->
-    <form id="form">
-      <h2>Форма</h2>
-      <div class="square1"><label id="fullname">Введите свое ФИО:</label> <input class="square" type="text" required="required"></div><!-- 1) ФИО (текстовое поле); -->
-      <div class="square1"><label id="tel">Телефон:</label><input class="square" type="tel" required="required"></div><!-- 2) Телефон (поле tel); -->
-      <div class="square1"><label>e-mail:</label><input class="square" type="email" required="required"></div><!-- 3) e-mail (поле email); -->
-      <div class="square1"><label>Дата рождения:</label> <input class="square" type="date" required="required"></div><!-- 4) дата рождения (поле даты); -->
-      <div class="other"><label>Ваш пол: М<input type="radio" name="human" required="required"> &nbsp;&nbsp; Ж</label><input type="radio" name="human"></div><!-- 5) пол (радиокнопки); -->
-      <label class="other">Выберите любимый (-ые) ЯП: <select multiple="multiple" required="required">
-        <option value="pascal">Pascal</option>
-        <option value="c">C</option>
-        <option value="c++">C++</option>
-        <option value="jvaScript">JavaScript</option>
-        <option value="php">PHP</option>
-        <option value="python">Python</option>
-        <option value="java">Java</option>
-        <option value="haskel">Haskel</option>
-        <option value="clojure">Clojure</option>
-        <option value="prolog">Prolog</option>
-        <option value="scala">Scala</option>
-      </select></label><br>
-      <div class="descriprion"><label>Расскажите о себе:<br><textarea name="message" rows="5" cols="30" required="required"></textarea></label></div><!-- 7) биография (многострочное текстовое поле); -->
-      <label><input type="checkbox" required="required"> с контрактом ознакомлен (-а)</label><br><!-- 8) с контрактом ознакомлен (а) (чекбокс); -->
-      <input type="submit" id="submit" value="Подтвердить">
-    </form>
-    <!-- Форма -->
-     <!-- Подвал -->
-    <footer>
-      <p>© Байталенко Даниил, КубГУ, МО22/1</p>
-    </footer>
-     <!-- Подвал -->
-    </div>
+        <div class="ms-3">
+          <input type="radio" name="service" value="2" data-price="800">
+          <label>Создание фотоальбома (800р)</label>
+        </div>
+        <div class="ms-3">
+          <input type="radio" name="service" value="3" data-price="1200">
+          <label>Ретушь и обработка фото (1200р)</label>
+        </div>
+      </div><!--Радиокнопки (услуга)-->
+      <div id="selectBlock" class="d-none flex-column"><!--Список (опция)-->
+        <label>Выберите опцию товара:</label>
+        <select id="selection" class="mb-2" required="required">
+          <option value="0">Размер фото: 10×15 (0р)</option>
+          <option value="250">Размер фото: 15х20 (250р)</option>
+          <option value="600">Размер фото: 20х30 (600р)</option>
+          <option value="1000">Размер фото: 30х40 (1000р)</option>
+        </select>
+      </div><!--Список (опция)-->
+      <div id="multiCheckbox" class="d-none flex-column"><!--Чекбоксы (свойства товар)-->
+        <label>Выберите свойство (-а) товара:</label>
+        <div class="ms-3 d-flex flex-column">
+          <div>
+            <input type="checkbox" name="checkboxGoods" value="40">
+            <label>Срочная печать (400р)</label>
+          </div>
+          <div>
+            <input type="checkbox" name="checkboxGoods" value="150">
+            <label>Ламинирование (150р)</label>
+          </div>
+          <div>
+            <input type="checkbox" name="checkboxGoods" value="200">
+            <label>Цветокоррекция (200р)</label>
+          </div>
+        </div>
+      </div><!--Чекбоксы (свойства товар)-->
+      <span id="output" class="mt-3 p-1">Выберите услугу.</span>
+    </form> <!-- Форма -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   </body>
 </html>
-
-
